@@ -1,17 +1,15 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:uaepass_api/uaepass/const.dart';
-import 'package:uaepass_api/uaepass/uaepass_user_profile_model.dart';
+import 'package:uaepass_api/uaepass/models/uaepass_response_model.dart';
+import 'package:uaepass_api/uaepass/models/uaepass_user_profile_model.dart';
 import 'package:uaepass_api/uaepass/uaepass_view.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-import 'uaepass_user_token_model.dart';
-
-enum UaePass { success, falied, cancelled }
+import 'models/uaepass_user_token_model.dart';
 
 /// The [UaePassAPI] class provides methods to facilitate authentication
 /// with UAE Pass, a digital identity solution provided by the United Arab Emirates government.
@@ -77,23 +75,19 @@ class UaePassAPI {
   /// [context]: The [BuildContext] to navigate to the authentication view.
   ///
   /// Returns a [String] representing the authentication code obtained during the process.
-  Future<String?> signIn(BuildContext context) async {
-    try {
-      String url = await _getURL();
-      if (context.mounted) {
-        return await Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => UaePassLoginView(
-              url: url,
-              urlScheme: _appScheme,
-              isProduction: _isProduction,
-            ),
+  Future<UaepassResponseModel?> signIn(BuildContext context) async {
+    String url = await _getURL();
+    if (context.mounted) {
+      return await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => UaePassLoginView(
+            url: url,
+            urlScheme: _appScheme,
+            isProduction: _isProduction,
           ),
-        );
-      }
-    } catch (e) {
-      log('Uaepass Service: $e');
+        ),
+      );
     }
     return null;
   }
@@ -122,8 +116,6 @@ class UaePassAPI {
         },
         body: data,
       );
-
-      log('Uaepass Service: ${response.body}');
 
       if (response.statusCode == 200) {
         return UAEPASSUserToken.fromJson(jsonDecode(response.body)).accessToken;
