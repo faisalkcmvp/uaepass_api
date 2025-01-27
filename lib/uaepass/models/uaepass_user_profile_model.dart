@@ -49,6 +49,7 @@ class UAEPASSUserProfile {
     firstnameAR = json['firstnameAR'];
     email = json['email'];
   }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['sub'] = sub;
