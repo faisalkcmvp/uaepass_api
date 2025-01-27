@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:uaepass_api/uaepass/const.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_fgbg/flutter_fgbg.dart';
 
 class UaePassLoginView extends StatefulWidget {
   final String url;
@@ -67,6 +69,7 @@ class _UaePassLoginViewState extends State<UaePassLoginView> {
         },
         shouldOverrideUrlLoading: (controller, uri) async {
           String url = uri.request.url.toString();
+          log('Uaepass Service 0: $url');
           if (url.contains('uaepass://')) {
             Uri uri = Uri.parse(url);
             String? successURL = uri.queryParameters['successurl'];

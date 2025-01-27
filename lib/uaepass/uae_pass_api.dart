@@ -11,6 +11,8 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 import 'uaepass_user_token_model.dart';
 
+enum UaePass { success, falied, cancelled }
+
 /// The [UaePassAPI] class provides methods to facilitate authentication
 /// with UAE Pass, a digital identity solution provided by the United Arab Emirates government.
 class UaePassAPI {
@@ -120,6 +122,8 @@ class UaePassAPI {
         },
         body: data,
       );
+
+      log('Uaepass Service: ${response.body}');
 
       if (response.statusCode == 200) {
         return UAEPASSUserToken.fromJson(jsonDecode(response.body)).accessToken;
