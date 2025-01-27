@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:uaepass_api/uaepass/const.dart';
+import 'package:uaepass_api/uaepass/constants/const.dart';
 import 'package:uaepass_api/uaepass/enums/uaepass_enum.dart';
 import 'package:uaepass_api/uaepass/models/uaepass_response_model.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -94,7 +94,12 @@ class _UaePassLoginViewState extends State<UaePassLoginView> {
           } else if (url.contains('cancelled')) {
             if (!url.contains('logout')) {
               Navigator.pop(
-                  context, UaepassResponseModel(status: UaePassEnum.cancelled));
+                context,
+                UaepassResponseModel(
+                  status: UaePassEnum.cancelled,
+                  message: 'User cancelled the login',
+                ),
+              );
               return NavigationActionPolicy.CANCEL;
             }
           }
