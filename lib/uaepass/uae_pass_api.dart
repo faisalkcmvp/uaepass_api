@@ -1,12 +1,15 @@
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:uaepass_api/uaepass/const.dart';
-import 'package:uaepass_api/uaepass/uaepass_user_profile_model.dart';
+import 'package:uaepass_api/uaepass/models/uaepass_response_model.dart';
+import 'package:uaepass_api/uaepass/models/uaepass_user_profile_model.dart';
 import 'package:uaepass_api/uaepass/uaepass_view.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'uaepass_user_token_model.dart';
+
+import 'models/uaepass_user_token_model.dart';
 
 /// The [UaePassAPI] class provides methods to facilitate authentication
 /// with UAE Pass, a digital identity solution provided by the United Arab Emirates government.
@@ -26,7 +29,7 @@ class UaePassAPI {
   /// [appScheme]: The scheme used by the Flutter application.
   /// [isProduction]: Indicates whether the app is running in production mode.
   /// [language]: Language parameter to be sent to render English or Arabic login pages of UAEPASS (English page : en Arabic page : ar).
-  UaePassAPI( {
+  UaePassAPI({
     required String clientId,
     required String redirectUri,
     required String clientSecrete,
@@ -61,7 +64,7 @@ class UaePassAPI {
         "&scope=urn:uae:digitalid:profile:general"
         "&state=HnlHOJTkTb66Y5H"
         "&redirect_uri=$_redirectUri"
-        "&ui_locales=${_language??"en"}"
+        "&ui_locales=${_language ?? "en"}"
         "&acr_values=$acr";
 
     return url;
@@ -72,7 +75,7 @@ class UaePassAPI {
   /// [context]: The [BuildContext] to navigate to the authentication view.
   ///
   /// Returns a [String] representing the authentication code obtained during the process.
-  Future<String?> signIn(BuildContext context) async {
+  Future<UaepassResponseModel?> signIn(BuildContext context) async {
     String url = await _getURL();
     if (context.mounted) {
       return await Navigator.push(

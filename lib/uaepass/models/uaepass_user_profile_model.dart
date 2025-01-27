@@ -49,4 +49,23 @@ class UAEPASSUserProfile {
     firstnameAR = json['firstnameAR'];
     email = json['email'];
   }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['sub'] = sub;
+    data['fullnameAR'] = fullNameAR;
+    data['gender'] = gender;
+    data['mobile'] = mobile;
+    data['lastnameEN'] = lastnameEN;
+    data['fullnameEN'] = fullNameEN;
+    data['uuid'] = uuid;
+    data['lastnameAR'] = lastnameAR;
+    data['idn'] = idn;
+    data['nationalityEN'] = nationalityEN;
+    data['firstnameEN'] = firstnameEN;
+    data['userType'] = userType;
+    data['nationalityAR'] = nationalityAR;
+    data['firstnameAR'] = firstnameAR;
+    data['email'] = email;
+    return data;
+  }
 }

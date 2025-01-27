@@ -1,9 +1,12 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:uaepass_api/uaepass/const.dart';
+import 'package:uaepass_api/uaepass/enums/uaepass_enum.dart';
+import 'package:uaepass_api/uaepass/models/uaepass_response_model.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_fgbg/flutter_fgbg.dart';
 
 class UaePassLoginView extends StatefulWidget {
   final String url;
@@ -85,11 +88,13 @@ class _UaePassLoginViewState extends State<UaePassLoginView> {
 
           if (url.contains('code=')) {
             final code = Uri.parse(url).queryParameters['code']!;
-            Navigator.pop(context, code);
+            Navigator.pop(context,
+                UaepassResponseModel(code: code, status: UaePassEnum.success));
             return NavigationActionPolicy.CANCEL;
           } else if (url.contains('cancelled')) {
             if (!url.contains('logout')) {
-              Navigator.pop(context);
+              Navigator.pop(
+                  context, UaepassResponseModel(status: UaePassEnum.cancelled));
               return NavigationActionPolicy.CANCEL;
             }
           }
