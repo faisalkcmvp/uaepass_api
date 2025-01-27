@@ -90,7 +90,6 @@ class UaePassAPI {
           ),
         );
       }
-      return null;
     } catch (e) {
       log('Uaepass Service: $e');
     }
