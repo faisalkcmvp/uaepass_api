@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class UAEPASSUserProfile {
   String? sub;
   String? fullNameAR;
