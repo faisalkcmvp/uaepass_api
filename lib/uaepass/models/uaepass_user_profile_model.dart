@@ -53,20 +53,27 @@ class UAEPASSUserProfile {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['sub'] = sub;
-    data['fullnameAR'] = fullNameAR;
+    data['fullnameAR'] = fixMojibake(fullNameAR);
     data['gender'] = gender;
     data['mobile'] = mobile;
     data['lastnameEN'] = lastnameEN;
     data['fullnameEN'] = fullNameEN;
     data['uuid'] = uuid;
-    data['lastnameAR'] = lastnameAR;
+    data['lastnameAR'] = fixMojibake(lastnameAR);
     data['idn'] = idn;
     data['nationalityEN'] = nationalityEN;
     data['firstnameEN'] = firstnameEN;
     data['userType'] = userType;
-    data['nationalityAR'] = nationalityAR;
-    data['firstnameAR'] = firstnameAR;
+    data['nationalityAR'] = fixMojibake(nationalityAR);
+    data['firstnameAR'] = fixMojibake(firstnameAR);
     data['email'] = email;
     return data;
   }
+}
+String? fixMojibake(String? badString) {
+  if (badString == null) {
+    return null;
+  }
+  final bytes = badString.codeUnits;
+  return utf8.decode(bytes, allowMalformed: true);
 }
